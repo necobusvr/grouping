@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://necobusvr.github.io/population-one-squad/">
   <meta property="og:title" content="POPULATION: ONE プラベ用チーム分け">
   <meta property="og:description"
-    content="スクワッドの平均キルレートが同じくらいになるようにチーム分けをします。各スクワッドの平均キルレートの差をどのくらいまで許容するかを設定できます。組み合わせ可能な最大人数は24人です。">
+    content="スクワッドの合計キルレートが同じくらいになるようにチーム分けをします。各スクワッドの合計キルレートの差をどのくらいまで許容するかを設定できます。組み合わせ可能な最大人数は24人です。">
   <meta property="og:image" content="https://necobusvr.github.io/grouping/image/twittercard.jpg">
   <link rel="icon" type="image/png" href="./image/favicon.png">
 </head>
@@ -34,7 +34,7 @@
       </div>
       <div>
         <div>キルレートによる組み合わせ調整範囲</div>
-        <input type="number" id="adjust" step="0.05" min="0.01" max="2" placeholder="0.02" value="0.5">
+        <input type="number" id="adjust" step="0.05" min="0" max="2" placeholder="0.02" value="0.5">
       </div>
       <div>
         <div>3人スクワッドで余りが1人になった場合（キルレに値を掛ける）</div>
@@ -50,17 +50,31 @@
       </div>
     </div>
     <div class="member-button">
-      <button id="remove">メンバー削除</button>
+      <button id="delete">メンバー削除</button>
       <button id="add">メンバー追加</button>
     </div>
+    <div id="import">
+      <div class="import-file">
+        <input id="file-input" class="file-input" type="file" name="file[]" accept=".csv">
+        <label for="file-input">CSV インポート</label>
+      </div>
+      <div class="character-code">
+        <label class="radio"><input type="radio" id="utf-8" name="character-code" checked><span class="outer"><span
+              class="inner"></span></span>UTF-8</label>
+        <label class="radio"><input type="radio" id="shift-jis" name="character-code"><span class="outer"><span
+              class="inner"></span></span>Shift-JIS</label>
+      </div>
+      <div class="csv-download"><a href="./csv/example.csv" download="example.csv">CSV DownLoad</a></div>
+    </div>
+    <div id="csv-message"></div>
     <div id="error-too-much-member"></div>
-    <div id="member-inner">
-      <div class="player">
-        <input type="text" id="player-name1" class="player-name" placeholder="player name 1">
-        <input type="number" id="kill-rate1" class="kill-rate" step="0.01" placeholder="kill rate">
+    <div id="entry-inner">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 1">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate1" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -72,13 +86,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name2" class="player-name" placeholder="player name 2">
-        <input type="number" id="kill-rate2" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 2">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate2" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -90,13 +105,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name3" class="player-name" placeholder="player name 3">
-        <input type="number" id="kill-rate3" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 3">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate3" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -108,13 +124,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name4" class="player-name" placeholder="player name 4">
-        <input type="number" id="kill-rate4" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 4">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate4" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -126,13 +143,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name5" class="player-name" placeholder="player name 5">
-        <input type="number" id="kill-rate5" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 5">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate5" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -144,13 +162,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name6" class="player-name" placeholder="player name 6">
-        <input type="number" id="kill-rate6" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 6">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate6" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -162,13 +181,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name7" class="player-name" placeholder="player name 7">
-        <input type="number" id="kill-rate7" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 7">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate7" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -180,13 +200,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name8" class="player-name" placeholder="player name 8">
-        <input type="number" id="kill-rate8" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 8">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate8" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -198,13 +219,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name9" class="player-name" placeholder="player name 9">
-        <input type="number" id="kill-rate9" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 9">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate9" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -216,13 +238,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name10" class="player-name" placeholder="player name 10">
-        <input type="number" id="kill-rate10" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 10">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate10" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -234,13 +257,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name11" class="player-name" placeholder="player name 11">
-        <input type="number" id="kill-rate11" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 11">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate11" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -252,13 +276,14 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
-      <div class="player">
-        <input type="text" id="player-name12" class="player-name" placeholder="player name 12">
-        <input type="number" id="kill-rate12" class="kill-rate" step="0.01" placeholder="kill rate">
+      <div class="entry-player">
+        <input type="text" class="player-name" placeholder="player name 12">
+        <input type="number" class="kill-rate" step="0.01" placeholder="kill rate">
         <div class="checkbox">
           <label class="checkbox__container">
-            <input id="team-mate12" class="checkbox__toggle" type="checkbox">
+            <input class="together checkbox__toggle" type="checkbox">
             <span class="checkbox__checker"></span>
             <span class="checkbox__txt-left">Fix</span>
             <span class="checkbox__txt-right">Free</span>
@@ -270,6 +295,7 @@
             </svg>
           </label>
         </div>
+        <span class="close"></span>
       </div>
     </div>
   </div>
@@ -284,8 +310,13 @@
     <div id="success-raffle"></div>
   </div>
   <div id="group"></div>
+  <div id="copy"></div>
   <footer>&copy; NECOBUS</footer>
-  <script src="./js/squad.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/entry.js"></script>
+  <script src="./js/grouping.js"></script>
+  <script src="./js/copy.js"></script>
+  <script src="./js/csv-import.js"></script>
 </body>
 
 </html>
