@@ -2,7 +2,6 @@
 body {
   font-family: "Noto Sans JP", sans-serif;
   line-height: 1.5;
-  padding: 0 20px;
   font-size: 16px;
 }
 
@@ -51,6 +50,7 @@ h1 .room {
 #member {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 #member .conditions {
@@ -98,6 +98,7 @@ h1 .room {
   border: 1px solid #555;
   padding: 10px;
   margin-top: 10px;
+  max-width: 100px;
 }
 
 #member .conditions > div input[type="number"]::-webkit-inner-spin-button,
@@ -117,8 +118,8 @@ h1 .room {
 
 #member .conditions > div .squad-fraction div {
   position: relative;
-  -ms-flex-preferred-size: 35%;
-      flex-basis: 35%;
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
   padding: 5px 10px;
 }
 
@@ -132,8 +133,8 @@ h1 .room {
 }
 
 #member .conditions > div .squad-fraction div:last-child {
-  -ms-flex-preferred-size: 30%;
-      flex-basis: 30%;
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
 }
 
 #member .conditions > div .squad-fraction input {
@@ -202,70 +203,162 @@ h1 .room {
   background: #1ac023;
 }
 
-#member .member-button button#remove {
+#member .member-button button#delete {
   background: #f86c2b;
   margin-right: 30px;
 }
 
-#member #member-inner {
+#member #import {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  #member #import {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  #member #import > div {
+    margin-top: 10px;
+  }
+}
+
+#member #import .csv-download a:hover {
+  text-decoration: underline;
+}
+
+#member #import > div {
+  margin-right: 20px;
+}
+
+#member #import > div:last-child {
+  margin-right: 0;
+}
+
+#member #import .import-file input[type="file"] {
+  display: none;
+}
+
+#member #import .import-file label {
+  background: #188afb;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+#member #import .import-file label:hover {
+  opacity: 0.7;
+  -webkit-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+
+#member #import .import-file .filename {
+  padding-left: 5px;
+}
+
+#member #entry-inner {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[6];
       grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   margin-top: 40px;
+  counter-reset: No 0;
 }
 
 @media screen and (max-width: 600px) {
-  #member #member-inner {
+  #member #entry-inner {
     -ms-grid-columns: (1fr)[2];
         grid-template-columns: repeat(2, 1fr);
   }
 }
 
-#member #member-inner .player input {
+#member #entry-inner .entry-player {
+  position: relative;
+}
+
+#member #entry-inner .entry-player::before {
+  counter-increment: No;
+  content: "No." counter(No, decimal-leading-zero);
+  position: absolute;
+  top: -9px;
+  font-family: "Caveat", cursive;
+  font-size: 24px;
+}
+
+#member #entry-inner .entry-player input {
   border: 1px solid #555;
   padding: 20px 10px;
 }
 
-#member #member-inner .player input.player-name {
+#member #entry-inner .entry-player input.player-name {
   width: 100%;
   font-size: 18px;
+  margin-top: 30px;
 }
 
-#member #member-inner .player input.kill-rate {
+#member #entry-inner .entry-player input.kill-rate {
   width: 100%;
   margin-top: 10px;
   padding: 10px 10px;
   text-align: center;
 }
 
-#member #member-inner .player input::-webkit-input-placeholder {
+#member #entry-inner .entry-player input::-webkit-input-placeholder {
   color: #ddd;
   font-family: "Caveat", cursive;
   font-size: 24px;
   text-align: center;
 }
 
-#member #member-inner .player input:-ms-input-placeholder {
+#member #entry-inner .entry-player input:-ms-input-placeholder {
   color: #ddd;
   font-family: "Caveat", cursive;
   font-size: 24px;
   text-align: center;
 }
 
-#member #member-inner .player input::-ms-input-placeholder {
+#member #entry-inner .entry-player input::-ms-input-placeholder {
   color: #ddd;
   font-family: "Caveat", cursive;
   font-size: 24px;
   text-align: center;
 }
 
-#member #member-inner .player input::placeholder {
+#member #entry-inner .entry-player input::placeholder {
   color: #ddd;
   font-family: "Caveat", cursive;
   font-size: 24px;
   text-align: center;
+}
+
+#member #entry-inner #add-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-top: 40px;
+}
+
+#member #entry-inner #add-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .raffle-button {
@@ -298,6 +391,7 @@ h1 .room {
 }
 
 .error-message {
+  padding: 0 20px;
   text-align: center;
   color: #f00;
   font-size: 20px;
@@ -339,6 +433,7 @@ h1 .room {
   gap: 20px;
   max-width: 1200px;
   margin: 30px auto 0 auto;
+  padding: 0 20px;
 }
 
 @media screen and (max-width: 600px) {
@@ -399,7 +494,7 @@ h1 .room {
 #group > section > div .kill-rate-average {
   font-size: 14px;
   padding: 5px 10px 2px 10px;
-  margin-top: 20px;
+  padding-top: 20px;
   text-align: center;
 }
 
@@ -543,5 +638,283 @@ footer {
   fill: #aaa;
   width: 100%;
   height: 100%;
+}
+
+.close {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: #333;
+  top: 0;
+  right: 0;
+}
+
+.close:before, .close:after {
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 15px;
+  background: #fff;
+  border-radius: 1.5px;
+  position: absolute;
+}
+
+.close:before {
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close:after {
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.close:hover {
+  border: 2px solid #333;
+  background: #fff;
+  cursor: pointer;
+}
+
+.close:hover:before, .close:hover:after {
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 15px;
+  background: #000;
+  border-radius: 1.5px;
+  position: absolute;
+}
+
+#copy {
+  margin-top: 80px;
+}
+
+#copy h3 {
+  text-align: center;
+}
+
+#copy #do-copy {
+  text-align: center;
+}
+
+#copy #do-copy #click-copy {
+  margin-top: 20px;
+  background: #999;
+  color: #fff;
+  display: inline-block;
+  padding: 2px 20px 5px 20px;
+}
+
+#copy #do-copy #click-copy:hover {
+  cursor: pointer;
+  background: #555;
+}
+
+#copy #do-copy #copy-result {
+  font-family: "Mochiy Pop P One", sans-serif;
+}
+
+#copy #do-copy #copy-result .success-copy {
+  color: #0cb018;
+  padding: 5px 20px;
+  -webkit-animation: fadeIn 1s linear;
+          animation: fadeIn 1s linear;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#copy #do-copy #copy-result .false-copy {
+  color: #b61313;
+  padding: 5px 10px;
+  -webkit-animation: fadeIn 1s linear;
+          animation: fadeIn 1s linear;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#copy #copy-txt {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 20px;
+}
+
+/**
+ * ラジオボタン
+ * Copyright (c) jchristianhall
+ * Released under the MIT license
+ * http://opensource.org/licenses/mit-license.php
+ */
+@-webkit-keyframes cardEnter {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes cardEnter {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+            transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+            transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+            transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+            transform: scale3d(0.97, 0.97, 0.97);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+.character-code {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.character-code .radio {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.character-code .radio:hover .inner {
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  opacity: 0.5;
+}
+
+.character-code .radio input {
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+}
+
+.character-code .radio input:checked + .outer .inner {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+
+.character-code .radio input:checked + .outer {
+  border: 3px solid #f08b3b;
+}
+
+.character-code .radio input:focus + .outer .inner {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+  background-color: #e67012;
+}
+
+.character-code .radio .outer {
+  height: 26px;
+  width: 26px;
+  display: block;
+  float: left;
+  margin: 10px 9px 10px 10px;
+  border: 3px solid #0c70b4;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.character-code .radio .inner {
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  height: 16px;
+  width: 16px;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  display: block;
+  margin: 2px;
+  border-radius: 50%;
+  background-color: #f08b3b;
+  opacity: 0;
 }
 /*# sourceMappingURL=style.css.map */
