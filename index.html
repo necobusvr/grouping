@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -13,6 +13,15 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat&family=Mochiy+Pop+P+One&family=Noto+Sans+JP&family=Yusei+Magic&display=swap"
     rel="stylesheet">
+  <script src="https://unpkg.com/glottologist"></script>
+  <script>
+    const glot = new Glottologist();
+    window.addEventListener('DOMContentLoaded', function () {
+      glot.import("./language/data.json").then(() => {
+        glot.render();
+      });
+    });
+  </script>
   <meta name="twitter:card" content="summary">
   <meta property="og:url" content="https://necobusvr.github.io/population-one-squad/">
   <meta property="og:title" content="POPULATION: ONE プラベ用チーム分け">
@@ -24,24 +33,25 @@
 
 <body>
   <header>
-    <h1><span class="pop1">POPULATION: ONE</span><span class="room">プラベ用チーム分け</span></h1>
+    <h1><span class="pop1">POPULATION: ONE</span><span class="room" glot-model="span_sab_title">プラベ用チーム分け</span></h1>
   </header>
   <div id="member">
     <div class="conditions">
       <div>
-        <div>スクワッドのプレイヤー数</div>
+        <label glot-model="label_squad_player" for="squad-player">スクワッドのプレイヤー数</label>
         <input type="number" id="squad-player" min="2" max="12" value="3">
       </div>
       <div>
-        <div>キルレートによる組み合わせ調整範囲</div>
+        <label glot-model="label_adjust" for="adjust">キルレートによる組み合わせ調整範囲</label>
         <input type="number" id="adjust" step="0.05" min="0" max="2" placeholder="0.02" value="0.5">
       </div>
       <div>
-        <div>3人スクワッドで余りが1人になった場合（キルレに値を掛ける）</div>
+        <label glot-model="label_adjust_irregular" for="adjust-irregular">3人スクワッドで余りが1人になった場合（キルレに値を掛ける）</label>
         <div class="squad-fraction">
-          <div><input type="radio" id="squad-fraction-2" name="squad-fraction" value="two"
-              checked><label>2人チームを作る</label></div>
-          <div><input type="radio" id="squad-fraction-4" name="squad-fraction" value="four"><label>4人チームを作る</label>
+          <div><input type="radio" id="squad-fraction-2" name="squad-fraction" value="two" checked><label
+              glot-model="labe_two-person">2人チームを作る</label></div>
+          <div><input type="radio" id="squad-fraction-4" name="squad-fraction" value="four"><label
+              glot-model="labe_four-person">4人チームを作る</label>
           </div>
           <div><input type="number" id="adjust-irregular" step="0.05" min="0.5" max="1.5" placeholder="キルレートの調整値"
               value="1.0">
@@ -50,13 +60,13 @@
       </div>
     </div>
     <div class="member-button">
-      <button id="delete">メンバー削除</button>
-      <button id="add">メンバー追加</button>
+      <button id="delete" glot-model="button_remove">メンバー削除</button>
+      <button id="add" glot-model="button_add">メンバー追加</button>
     </div>
     <div id="import">
       <div class="import-file">
         <input id="file-input" class="file-input" type="file" name="file[]" accept=".csv">
-        <label for="file-input">CSV インポート</label>
+        <label for="file-input" glot-model="label_csv_import">CSV インポート</label>
       </div>
       <div class="character-code">
         <label class="radio"><input type="radio" id="utf-8" name="character-code" checked><span class="outer"><span
@@ -300,7 +310,7 @@
     </div>
   </div>
   <div class="raffle-button">
-    <button id="raffle">抽選</button>
+    <button id="raffle" glot-model="button_draw">抽選</button>
   </div>
   <div class="error-message">
     <div id="error-player-name"></div>
