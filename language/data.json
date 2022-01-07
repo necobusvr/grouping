@@ -1,0 +1,92 @@
+{
+  "span_sab_title":{
+    "en": "Grouping for Private Room",
+    "fr": "Grouping for Private Room",
+    "it": "Grouping for Private Room",
+    "de": "Grouping for Private Room",
+    "es": "Grouping for Private Room",
+    "ru": "Grouping for Private Room",
+    "ja": "プラベ用チーム分け"
+  },
+  "label_squad_player": {
+    "en": "Number of players of Squad",
+    "fr": "Number of players of Squad",
+    "it": "Number of players of Squad",
+    "de": "Number of players of Squad",
+    "es": "Number of players of Squad",
+    "ru": "Number of players of Squad",
+    "ja": "スクワッドのプレイヤー数"
+  },
+  "label_adjust": {
+    "en": "Combination adjustment range by kill rate",
+    "fr": "Combination adjustment range by kill rate",
+    "it": "Combination adjustment range by kill rate",
+    "de": "Combination adjustment range by kill rate",
+    "es": "Combination adjustment range by kill rate",
+    "ru": "Combination adjustment range by kill rate",
+    "ja": "キルレートによる組み合わせ調整範囲"
+  },
+  "label_adjust_irregular": {
+    "en": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "fr": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "it": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "de": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "es": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "ru": "If you have a 3 man squad and there is only 1 man left (multiply the value by the kill rate)",
+    "ja": "3人スクワッドで余りが1人になった場合（キルレに値を掛ける）"
+  },
+  "labe_two-person": {
+    "en": "Team of 2",
+    "fr": "Team of 2",
+    "it": "Team of 2",
+    "de": "Team of 2",
+    "es": "Team of 2",
+    "ru": "Team of 2",
+    "ja": "2人チームを作る"
+  },
+  "labe_four-person": {
+    "en": "Team of 4",
+    "fr": "Team of 4",
+    "it": "Team of 4",
+    "de": "Team of 4",
+    "es": "Team of 4",
+    "ru": "Team of 4",
+    "ja": "4人チームを作る"
+  },
+  "button_remove": {
+    "en": "Remove",
+    "fr": "Remove",
+    "it": "Remove",
+    "de": "Remove",
+    "es": "Remove",
+    "ru": "Remove",
+    "ja": "メンバー削除"
+  },
+  "button_add": {
+    "en": "Add",
+    "fr": "Add",
+    "it": "Add",
+    "de": "Add",
+    "es": "Add",
+    "ru": "Add",
+    "ja": "メンバー追加"
+  },
+  "label_csv_import": {
+    "en": "CSV Import",
+    "fr": "CSV Import",
+    "it": "CSV Import",
+    "de": "CSV Import",
+    "es": "CSV Import",
+    "ru": "CSV Import",
+    "ja": "CSV インポート"
+  },
+  "button_draw": {
+    "en": "Draw",
+    "fr": "Draw",
+    "it": "Draw",
+    "de": "Draw",
+    "es": "Draw",
+    "ru": "Draw",
+    "ja": "抽選"
+  }
+}
