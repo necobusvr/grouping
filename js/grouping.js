@@ -38,14 +38,14 @@ let grouping = {
           playerNameClass[i].classList.add("error-empty");
           grouping.errorPlayerName.innerText = `No.${i + 1}のプレイヤー名が入力されていません。`;
           return false;
-        } else if (entry.entryArray[i].player_name.length !== 0) {
+        } else {
           playerNameClass[i].classList.remove("error-empty");
         }
         if (entry.entryArray[i].kill_rate == false) {
           killRateClass[i].classList.add("error-empty");
           grouping.errorKillRate.innerText = `No.${i + 1}のキルレートが入力されていません。`;
           return false;
-        } else if (entry.entryArray[i].player_name.length !== 0) {
+        } else {
           killRateClass[i].classList.remove("error-empty");
         }
       }
