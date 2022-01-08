@@ -8,23 +8,38 @@ const fileReader = new FileReader();
 
 // ファイル変更時のイベント
 fileInput.onchange = () => {
-  csvMessage.innerHTML = "Now Loading...";
   const file = fileInput.files[0];
-  if (utf8.checked) {
-    fileReader.readAsText(file, "UTF-8");
-  } else if (shiftJis.checked) {
-    fileReader.readAsText(file, "Shift_JIS");
+  const fileSize = file.size; // ファイルサイズ
+  const maxFileSize = 1024 * 100; // 制限サイズ
+
+  if (file.type !== "text/csv" && file.type !== "application/vnd.ms-excel" && file.type !== "application/octet-stream") {
+    alert("CSVファイルしかアップロードできません"); // エラーメッセージを表示
+    fileInput.value = ""; // inputの中身をリセット
+    return; // この時点で処理を終了する
+  } else if (fileSize > maxFileSize) {
+    // ファイルサイズが制限以上の場合
+    alert("ファイルサイズは100KB以下にしてください"); // エラーメッセージを表示
+    fileInput.value = ""; // inputの中身をリセット
+    return; // この時点で処理を終了する
+  } else {
+    csvMessage.innerHTML = "Now Loading...";
+    if (utf8.checked) {
+      fileReader.readAsText(file, "UTF-8");
+    } else if (shiftJis.checked) {
+      fileReader.readAsText(file, "Shift_JIS");
+    }
+
+    // ファイル名を出力
+    const fileName = file.name;
+    const label = fileInput.nextElementSibling;
+    if (!label.classList.contains("changed")) {
+      const span = document.createElement("span");
+      span.className = "filename";
+      fileInput.parentNode.appendChild(span);
+      label.classList.add("changed");
+    }
+    label.nextElementSibling.innerHTML = fileName;
   }
-  // ファイル名を出力
-  const fileName = file.name;
-  const label = fileInput.nextElementSibling;
-  if (!label.classList.contains("changed")) {
-    const span = document.createElement("span");
-    span.className = "filename";
-    fileInput.parentNode.appendChild(span);
-    label.classList.add("changed");
-  }
-  label.nextElementSibling.innerHTML = fileName;
 };
 
 // ファイル読み込み時
@@ -58,26 +73,10 @@ fileReader.onload = () => {
 // ファイル読み取り失敗時
 fileReader.onerror = () => {
   entry.entryArray = [];
-  csvMessage.innerHTML = "ファイル読み取りに失敗しました。";
+  csvMessage.innerHTML = "ファイルの読み取りに失敗しました。";
 };
 
 // 同じファイルをアップロードできるようにする
 fileInput.addEventListener("click", (e) => {
   e.target.value = "";
 });
-
-// アップロードサイズの上限
-const sizeLimit = 1024 * 1024 * 0.5; // 制限サイズ
-const handleFileSelect = () => {
-  const files = fileInput.files;
-  const fileSize = files[0].size;
-  if (fileSize > sizeLimit) {
-    // ファイルサイズが制限以上
-    alert("ファイルサイズは512KB以下にしてください"); // エラーメッセージを表示
-    fileInput.value = ""; // inputの中身をリセット
-    return; // この時点で処理を終了する
-  }
-  console.log(fileSize);
-};
-// フィールドの値が変更された時（≒ファイル選択時）に、handleFileSelectを発火
-fileInput.addEventListener("change", handleFileSelect);
