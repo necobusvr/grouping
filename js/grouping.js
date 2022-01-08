@@ -30,15 +30,23 @@ let grouping = {
       common.removeAllChildren(grouping.successRaffle);
       common.removeAllChildren(common.tooMuch);
       common.removeAllChildren(copy.copyId);
+      const playerNameClass = document.querySelectorAll(".player-name");
+      const killRateClass = document.querySelectorAll(".kill-rate");
 
       for (let i = 0; i < entry.entryArray.length; i++) {
         if (entry.entryArray[i].player_name == false) {
+          playerNameClass[i].classList.add("error-empty");
           grouping.errorPlayerName.innerText = `No.${i + 1}のプレイヤー名が入力されていません。`;
           return false;
+        } else if (entry.entryArray[i].player_name.length !== 0) {
+          playerNameClass[i].classList.remove("error-empty");
         }
         if (entry.entryArray[i].kill_rate == false) {
+          killRateClass[i].classList.add("error-empty");
           grouping.errorKillRate.innerText = `No.${i + 1}のキルレートが入力されていません。`;
           return false;
+        } else if (entry.entryArray[i].player_name.length !== 0) {
+          killRateClass[i].classList.remove("error-empty");
         }
       }
 
