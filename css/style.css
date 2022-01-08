@@ -106,6 +106,10 @@ h1 .room {
   opacity: 1;
 }
 
+#member .conditions > div label {
+  display: block;
+}
+
 #member .conditions > div .squad-fraction {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -341,6 +345,28 @@ h1 .room {
   font-family: "Caveat", cursive;
   font-size: 24px;
   text-align: center;
+}
+
+#member #entry-inner .entry-player input.error-empty {
+  border: 1px solid #c00;
+  -webkit-box-shadow: 0 0 8px #c00;
+          box-shadow: 0 0 8px #c00;
+}
+
+#member #entry-inner .entry-player input.error-empty::-webkit-input-placeholder {
+  color: #c00;
+}
+
+#member #entry-inner .entry-player input.error-empty:-ms-input-placeholder {
+  color: #c00;
+}
+
+#member #entry-inner .entry-player input.error-empty::-ms-input-placeholder {
+  color: #c00;
+}
+
+#member #entry-inner .entry-player input.error-empty::placeholder {
+  color: #c00;
 }
 
 #member #entry-inner #add-button {
