@@ -91,7 +91,7 @@ let grouping = {
        * 組み合わせ抽選の処理
        */
       let count = 1;
-      let limit = 5000;
+      let limit = 100000;
       if (teamMateErrorCheck() !== false) {
         while (count <= limit) {
           //シャッフルした配列
@@ -240,7 +240,7 @@ let grouping = {
             let squadMinKillRate = Math.min(...squadKillRateSumArray);
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
             // 抽選された各スクワッドの合計キルレートと全体の合計キルレートを比較し条件分岐
-            grouping.successRaffle.innerHTML = `<h3>Success!! ${count}回目の抽選で要件を満たす組み合わせが見つかりました。</h3>
+            grouping.successRaffle.innerHTML = `<h3>Success!! ${count.toLocaleString()}回目の抽選で要件を満たす組み合わせが見つかりました。</h3>
             <div class="success-result">このプライベートルームの<br>合計キルレートは <span>${killRateSum.toFixed(2)}</span><br>平均キルレートは <span>${killRateAverage.toFixed(2)}</span><br>
             最大のキルレートの差は <span>${(squadMaxKillRate.toFixed(2) - squadMinKillRate.toFixed(2)).toFixed(2)}</span> です。</div>`;
 
@@ -293,7 +293,8 @@ let grouping = {
             copy.textData(squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate);
             break;
           } else if (count == limit) {
-            grouping.errorRaffle.innerHTML = `${count}回抽選を行いましたが要件を満たす組み合わせが見つかりませんでした。<br>もう一度抽選を行うか調整範囲を変更して再度抽選をしてください。`;
+            grouping.errorRaffle.classList.add("is-animated");
+            grouping.errorRaffle.innerHTML = `${count.toLocaleString()}回抽選を行いましたが要件を満たす組み合わせが見つかりませんでした。<br>もう一度抽選を行うか調整範囲を変更して再度抽選をしてください。`;
           }
           count++;
         }
