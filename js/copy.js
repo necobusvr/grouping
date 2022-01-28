@@ -1,7 +1,7 @@
 "use strict";
 let copy = {
   copyId: document.getElementById("copy"),
-  textData: function (squadArray, squadKillRateAverageArray, squadKillRateSumArray, killRateAverage, squadMaxKillRate, squadMinKillRate) {
+  textData: function (squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate) {
     // 分割されたスクワッドの配列をキルレート順にソート
     for (let i = 0; i < squadArray.length; i++) {
       squadArray[i].sort((first, second) => second.kill_rate - first.kill_rate);
@@ -29,8 +29,8 @@ let copy = {
         copyTextData.insertAdjacentHTML("beforeend", resultText);
         copy.copyId.appendChild(copyTextData);
       }
-      copyTextData.insertAdjacentHTML("beforeend", `平均キルレ: ${squadKillRateAverageArray[i].toFixed(2)}<br>\n`);
-      copyTextData.insertAdjacentHTML("beforeend", `合計キルレ: ${squadKillRateSumArray[i].toFixed(2)}<br><br>\n\n--------------------<br><br>\n\n`);
+      copyTextData.insertAdjacentHTML("beforeend", `平均キルレ: ${(squadNewKRSumAry[i] / squadArray[i].length).toFixed(2)}<br>\n`);
+      copyTextData.insertAdjacentHTML("beforeend", `合計キルレ: ${squadNewKRSumAry[i].toFixed(2)}<br><br>\n\n--------------------<br><br>\n\n`);
     }
 
     // コピーができたかどうかの確認メッセージを出力する場所を作る

@@ -71,10 +71,6 @@ let grouping = {
         }
       };
 
-      // トータルキルレート値
-      const killRateSum = entry.entryArray.reduce((sum, i) => sum + i.kill_rate, 0);
-      // 平均のキルレート値
-      const killRateAverage = killRateSum / entry.entryArray.length;
       // 抽選する条件
       const SquadPlayerSum = Number(document.getElementById("squad-player").value);
       const adjust = Number(document.getElementById("adjust").value);
@@ -95,7 +91,7 @@ let grouping = {
        * 組み合わせ抽選の処理
        */
       let count = 1;
-      let limit = 2000;
+      let limit = 5000;
       if (teamMateErrorCheck() !== false) {
         while (count <= limit) {
           //シャッフルした配列
@@ -130,7 +126,6 @@ let grouping = {
           // 抽選されたスクワッドのキルレート
           let squadKillRateSum;
           let squadKillRateSumArray = [];
-          let squadKillRateAverageArray = [];
           let squadKillRateSumArrayVirtual = [];
 
           // ラジオボックスのチェック確認
@@ -152,15 +147,11 @@ let grouping = {
                 squadKillRateSum = squadArray[m].reduce((sum, j) => sum + j.kill_rate, 0);
                 // キルレートの合計を配列に追加
                 squadKillRateSumArray.push(squadKillRateSum);
-                // 平均キルレートを配列に追加
-                squadKillRateAverageArray.push(squadKillRateSum / squadArray[m].length);
                 // 調整した仮想キルレートを配列に追加
                 squadKillRateSumArrayVirtual.push(squadKillRateSum * adjustIrregular.value);
                 squadKillRateSum = squadArray[m + 1].reduce((sum, j) => sum + j.kill_rate, 0);
                 // キルレートの合計を配列に追加
                 squadKillRateSumArray.push(squadKillRateSum);
-                // 平均キルレートを配列に追加
-                squadKillRateAverageArray.push(squadKillRateSum / squadArray[m + 1].length);
                 k = k + SquadPlayerSum;
                 // 調整した仮想キルレートを配列に追加
                 squadKillRateSumArrayVirtual.push(squadKillRateSum * adjustIrregular.value);
@@ -172,8 +163,6 @@ let grouping = {
                 squadKillRateSum = squadArray[m].reduce((sum, j) => sum + j.kill_rate, 0);
                 // キルレートの合計を配列に追加
                 squadKillRateSumArray.push(squadKillRateSum);
-                // 平均キルレートを配列に追加
-                squadKillRateAverageArray.push(squadKillRateSum / squadArray[m].length);
                 k = k + SquadPlayerSum + 1;
                 // 調整した仮想キルレートを配列に追加
                 squadKillRateSumArrayVirtual.push(squadKillRateSum * adjustIrregular.value);
@@ -185,8 +174,6 @@ let grouping = {
                 squadKillRateSum = squadArray[m].reduce((sum, j) => sum + j.kill_rate, 0);
                 // キルレートの合計を配列に追加
                 squadKillRateSumArray.push(squadKillRateSum);
-                // 平均キルレートを配列に追加
-                squadKillRateAverageArray.push(squadKillRateSum / squadArray[m].length);
                 // 調整用仮想キルレートを配列に追加（調整なし）
                 squadKillRateSumArrayVirtual.push(squadKillRateSum);
               }
@@ -233,39 +220,31 @@ let grouping = {
           };
 
           /**
-           * すべてのスクワッドの合計キルレートの差分を判定
-           * @returns {boolean} すべてのスクワッドの合計キルレートの差分が調整範囲(adjust)以内なら true
+           * 最大最小の合計キルレートの差分を判定
+           * @returns {boolean} 合計キルレートの差分が調整範囲(adjust)以内なら true
            */
           const compare = () => {
-            let diffArray = subtraction(squadKillRateSumArrayVirtual, 2);
-            let diffResultArray = [];
-            // すべてのスクワッドのキルレートの差分を配列にする
-            for (let i = 0; i < diffArray.length; i++) {
-              // 2つのスクワッドの合計キルレートの差を正数で返す
-              let diff = Math.abs(diffArray[i][0] - diffArray[i][1]);
-              diffResultArray.push(diff);
+            let maxKR = Math.max(...squadKillRateSumArrayVirtual);
+            let minKR = Math.min(...squadKillRateSumArrayVirtual);
+            let compareMaxMin = maxKR - minKR;
+            if (compareMaxMin < adjust) {
+              return true;
             }
-            const isBelowThreshold = (currentValue) => currentValue < adjust;
-            return diffResultArray.every(isBelowThreshold);
           };
 
-          /**
-           * スクワッドの最大最小キルレートを変数にする
-           */
-          const aryMax = function (first, second) {
-            return Math.max(first, second);
-          };
-          const aryMin = function (first, second) {
-            return Math.min(first, second);
-          };
-          const squadMaxKillRate = squadKillRateSumArray.reduce(aryMax);
-          const squadMinKillRate = squadKillRateSumArray.reduce(aryMin);
-          const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
           if (compare()) {
+            // トータルキルレート値
+            const killRateSum = entry.entryArray.reduce((sum, i) => sum + i.kill_rate, 0);
+            // 平均のキルレート値
+            const killRateAverage = killRateSum / entry.entryArray.length;
+            // スクワッドの最大最小キルレートを変数にする
+            let squadMaxKillRate = Math.max(...squadKillRateSumArray);
+            let squadMinKillRate = Math.min(...squadKillRateSumArray);
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
             // 抽選された各スクワッドの合計キルレートと全体の合計キルレートを比較し条件分岐
             grouping.successRaffle.innerHTML = `<h3>Success!! ${count}回目の抽選で要件を満たす組み合わせが見つかりました。</h3>
-       <div class="success-result">このプライベートルームの<br>合計キルレートは <span>${killRateSum.toFixed(2)}</span><br>平均キルレートは <span>${killRateAverage.toFixed(2)}</span><br>
-       最大のキルレートの差は <span>${(squadMaxKillRate.toFixed(2) - squadMinKillRate.toFixed(2)).toFixed(2)}</span> です。</div>`;
+            <div class="success-result">このプライベートルームの<br>合計キルレートは <span>${killRateSum.toFixed(2)}</span><br>平均キルレートは <span>${killRateAverage.toFixed(2)}</span><br>
+            最大のキルレートの差は <span>${(squadMaxKillRate.toFixed(2) - squadMinKillRate.toFixed(2)).toFixed(2)}</span> です。</div>`;
 
             // 分割されたスクワッドの配列をキルレート順にソート
             for (let i = 0; i < squadArray.length; i++) {
@@ -275,12 +254,14 @@ let grouping = {
             // 余りのスクワッドが最後にならないように再度シャッフル(Groupをシャッフル)
             squadArray = shuffle(squadArray);
 
+            let squadNewKRSumAry = [];
+
             // スクワッドのDivを作成しメンバーを配置
             for (let i = 0; i < squadArray.length; i++) {
               let createSquadSection = document.createElement("section");
               let createSquadDiv = document.createElement("div");
-              createSquadSection.id = `squad${alphabet[i]}`;
-              createSquadDiv.id = `squad-inner-${alphabet[i]}`;
+              //createSquadSection.id = `squad${alphabet[i]}`;
+              //createSquadDiv.id = `squad-inner-${alphabet[i]}`;
               grouping.groupDiv.appendChild(createSquadSection);
               createSquadSection.appendChild(createSquadDiv);
               createSquadSection.insertAdjacentHTML("afterbegin", `<h2>Group ${alphabet[i]}</h2>`);
@@ -290,13 +271,19 @@ let grouping = {
                 createSquadSection.appendChild(createSquadDiv);
               }
               createSquadDiv.insertAdjacentHTML("afterbegin", `<div class="player-header"><div>name</div><div>kill rate</div></div>`);
-              createSquadDiv.insertAdjacentHTML("beforeend", `<div class="kill-rate-average">平均キルレ： ${squadKillRateAverageArray[i].toFixed(2)}</div>`);
-              createSquadDiv.insertAdjacentHTML("beforeend", `<div class="kill-rate-sum">合計キルレ： ${squadKillRateSumArray[i].toFixed(2)}</div>`);
+              // スクワッドの合計・平均キルレート
+              let squadNewKRSum = squadArray[i].reduce((sum, j) => sum + j.kill_rate, 0);
+              squadNewKRSumAry.push(squadNewKRSum);
+              createSquadDiv.insertAdjacentHTML("beforeend", `<div class="kill-rate-average">平均キルレ： ${(squadNewKRSumAry[i] / squadArray[i].length).toFixed(2)}</div>`);
+              createSquadDiv.insertAdjacentHTML("beforeend", `<div class="kill-rate-sum">合計キルレ： ${squadNewKRSumAry[i].toFixed(2)}</div>`);
             }
 
+            // スクワッドの最大最小キルレートを変数にする
+            squadMaxKillRate = Math.max(...squadNewKRSumAry);
+            squadMinKillRate = Math.min(...squadNewKRSumAry);
             // 配列の順序[i]を取得
-            const squadMaxKillRatePosition = squadKillRateSumArray.indexOf(squadMaxKillRate);
-            const squadMinKillRatePosition = squadKillRateSumArray.indexOf(squadMinKillRate);
+            const squadMaxKillRatePosition = squadNewKRSumAry.indexOf(squadMaxKillRate);
+            const squadMinKillRatePosition = squadNewKRSumAry.indexOf(squadMinKillRate);
 
             // 最強スクワッドにclassを追加
             const strongSquad = document.querySelectorAll("#group > section");
@@ -305,7 +292,7 @@ let grouping = {
             // 最弱スクワッドにclassを追加
             const weakSquad = document.querySelectorAll("#group > section");
             weakSquad[squadMinKillRatePosition].classList.add("weak-squad");
-            copy.textData(squadArray, squadKillRateAverageArray, squadKillRateSumArray, killRateAverage, squadMaxKillRate, squadMinKillRate);
+            copy.textData(squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate);
             break;
           } else if (count == limit) {
             grouping.errorRaffle.innerHTML = `${count}回抽選を行いましたが要件を満たす組み合わせが見つかりませんでした。<br>もう一度抽選を行うか調整範囲を変更して再度抽選をしてください。`;
