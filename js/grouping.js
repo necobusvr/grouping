@@ -188,8 +188,6 @@ let grouping = {
               squadKillRateSum = squadArray[m].reduce((sum, j) => sum + j.kill_rate, 0);
               // キルレートの合計を配列に追加
               squadKillRateSumArray.push(squadKillRateSum);
-              // 平均キルレートを配列に追加
-              squadKillRateAverageArray.push(squadKillRateSum / squadArray[m].length);
               // 調整用仮想キルレートを配列に追加（調整なし）
               squadKillRateSumArrayVirtual.push(squadKillRateSum);
             }
