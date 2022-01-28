@@ -264,7 +264,7 @@ let grouping = {
               createSquadSection.appendChild(createSquadDiv);
               createSquadSection.insertAdjacentHTML("afterbegin", `<h2>Group ${alphabet[i]}</h2>`);
               for (let j = 0; j < squadArray[i].length; j++) {
-                let resultHtml = `<div class="player"><div>${squadArray[i][j].player_name}</div><div>${squadArray[i][j].kill_rate}</div></div>`;
+                let resultHtml = `<div class="player"><div>${squadArray[i][j].player_name}</div><div>${squadArray[i][j].kill_rate.toFixed(2)}</div></div>`;
                 createSquadDiv.insertAdjacentHTML("afterbegin", resultHtml);
                 createSquadSection.appendChild(createSquadDiv);
               }
