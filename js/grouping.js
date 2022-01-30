@@ -32,6 +32,8 @@ let grouping = {
       common.removeAllChildren(copy.copyId);
       const playerNameClass = document.querySelectorAll(".player-name");
       const killRateClass = document.querySelectorAll(".kill-rate");
+      // アニメーション用classを削除
+      grouping.errorRaffle.classList.remove("animated");
 
       for (let i = 0; i < entry.entryArray.length; i++) {
         if (entry.entryArray[i].player_name == false) {
@@ -91,7 +93,7 @@ let grouping = {
        * 組み合わせ抽選の処理
        */
       let count = 1;
-      let limit = 100000;
+      let limit = 1000000;
       if (teamMateErrorCheck() !== false) {
         while (count <= limit) {
           //シャッフルした配列
@@ -293,7 +295,9 @@ let grouping = {
             copy.textData(squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate);
             break;
           } else if (count == limit) {
-            grouping.errorRaffle.classList.add("is-animated");
+            window.setTimeout(() => {
+              grouping.errorRaffle.classList.add("animated");
+            }, 100);
             grouping.errorRaffle.innerHTML = `${count.toLocaleString()}回抽選を行いましたが要件を満たす組み合わせが見つかりませんでした。<br>もう一度抽選を行うか調整範囲を変更して再度抽選をしてください。`;
           }
           count++;
