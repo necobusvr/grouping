@@ -34,6 +34,10 @@
 <body>
   <header>
     <h1><span class="pop1">POPULATION: ONE</span><span class="room" glot-model="span_sab_title">プラベ用チーム分け</span></h1>
+    <div class="lucky-person">
+      <div>Lucky Person</div>
+      <input type="number" id="lucky-input" step="1" min="0" value="0">
+    </div>
   </header>
   <div id="member">
     <div class="conditions">
@@ -316,10 +320,12 @@
     <div id="error-player-name"></div>
     <div id="error-team-mate"></div>
     <div id="error-kill-rate"></div>
+    <div id="error-lucky"></div>
     <div id="error-raffle"></div>
     <div id="success-raffle"></div>
   </div>
   <div id="group"></div>
+  <div id="lucky-switch"></div>
   <div id="copy"></div>
   <footer>&copy; NECOBUS</footer>
   <script src="./js/common.js"></script>
