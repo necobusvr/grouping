@@ -23,6 +23,8 @@ header {
           justify-content: space-between;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 header h1 {
