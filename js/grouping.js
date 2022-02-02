@@ -12,8 +12,10 @@ let grouping = {
   errorPlayerName: document.getElementById("error-player-name"),
   errorKillRate: document.getElementById("error-kill-rate"),
   errorTeamMate: document.getElementById("error-team-mate"),
+  errorLuckyPerson: document.getElementById("error-lucky"),
   errorRaffle: document.getElementById("error-raffle"),
   successRaffle: document.getElementById("success-raffle"),
+  luckySwitch: document.getElementById("lucky-switch"),
 
   // 抽選をする
   raffle: function () {
@@ -26,15 +28,19 @@ let grouping = {
       common.removeAllChildren(grouping.errorPlayerName);
       common.removeAllChildren(grouping.errorKillRate);
       common.removeAllChildren(grouping.errorTeamMate);
+      common.removeAllChildren(grouping.errorLuckyPerson);
       common.removeAllChildren(grouping.errorRaffle);
       common.removeAllChildren(grouping.successRaffle);
+      common.removeAllChildren(grouping.luckySwitch);
       common.removeAllChildren(common.tooMuch);
       common.removeAllChildren(copy.copyId);
+
       const playerNameClass = document.querySelectorAll(".player-name");
       const killRateClass = document.querySelectorAll(".kill-rate");
       // アニメーション用classを削除
       grouping.errorRaffle.classList.remove("animated");
 
+      // 入力フォームのエラーメッセージ
       for (let i = 0; i < entry.entryArray.length; i++) {
         if (entry.entryArray[i].player_name == false) {
           playerNameClass[i].classList.add("error-empty");
@@ -76,6 +82,27 @@ let grouping = {
       // 抽選する条件
       const SquadPlayerSum = Number(document.getElementById("squad-player").value);
       const adjust = Number(document.getElementById("adjust").value);
+
+      // ラッキーパーソン
+      const luckyInput = document.getElementById("lucky-input");
+
+      // エラーメッセージ
+      if (luckyInput.value > entry.entryArray.length) {
+        grouping.errorLuckyPerson.innerText = `Lucky Person は参加人数(${entry.entryArray.length})以下にしてください。`;
+        return false;
+      }
+      const luckyArray = [];
+      for (let i = 0; i < luckyInput.value; i++) {
+        while (true) {
+          let luckyNum = Math.floor(Math.random() * entry.entryArray.length);
+          // 重複チェック
+          if (!luckyArray.includes(luckyNum)) {
+            luckyArray.push(luckyNum);
+            entry.entryArray[luckyNum]["lucky_person"] = true;
+            break;
+          }
+        }
+      }
 
       /**
        * 配列をシャッフルする関
@@ -260,15 +287,19 @@ let grouping = {
             for (let i = 0; i < squadArray.length; i++) {
               let createSquadSection = document.createElement("section");
               let createSquadDiv = document.createElement("div");
-              //createSquadSection.id = `squad${alphabet[i]}`;
-              //createSquadDiv.id = `squad-inner-${alphabet[i]}`;
               grouping.groupDiv.appendChild(createSquadSection);
               createSquadSection.appendChild(createSquadDiv);
               createSquadSection.insertAdjacentHTML("afterbegin", `<h2>Group ${alphabet[i]}</h2>`);
               for (let j = 0; j < squadArray[i].length; j++) {
-                let resultHtml = `<div class="player"><div>${squadArray[i][j].player_name}</div><div>${squadArray[i][j].kill_rate.toFixed(2)}</div></div>`;
-                createSquadDiv.insertAdjacentHTML("afterbegin", resultHtml);
-                createSquadSection.appendChild(createSquadDiv);
+                if (squadArray[i][j].lucky_person) {
+                  let resultHtml = `<div class="player"><div>${squadArray[i][j].player_name}<span class="lucky-person">★</span></div><div>${squadArray[i][j].kill_rate.toFixed(2)}</div></div>`;
+                  createSquadDiv.insertAdjacentHTML("afterbegin", resultHtml);
+                  createSquadSection.appendChild(createSquadDiv);
+                } else {
+                  let resultHtml = `<div class="player"><div>${squadArray[i][j].player_name}</div><div>${squadArray[i][j].kill_rate.toFixed(2)}</div></div>`;
+                  createSquadDiv.insertAdjacentHTML("afterbegin", resultHtml);
+                  createSquadSection.appendChild(createSquadDiv);
+                }
               }
               createSquadDiv.insertAdjacentHTML("afterbegin", `<div class="player-header"><div>name</div><div>kill rate</div></div>`);
               // スクワッドの合計・平均キルレート
@@ -292,6 +323,20 @@ let grouping = {
             // 最弱スクワッドにclassを追加
             const weakSquad = document.querySelectorAll("#group > section");
             weakSquad[squadMinKillRatePosition].classList.add("weak-squad");
+
+            // ラッキーパーソンの表示切り替え
+            grouping.groupDiv.classList.remove("lucky-remove");
+            grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
+            grouping.luckySwitch.onclick = function () {
+              grouping.groupDiv.classList.toggle("lucky-remove");
+              if (grouping.luckySwitch.innerText === "Lucky Person を非表示にする") {
+                grouping.luckySwitch.innerHTML = "<div>Lucky Person を表示する</div>";
+              } else {
+                grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
+              }
+            };
+            console.log(grouping.luckySwitch.innerText == "Lucky Person を非表示にする");
+
             copy.textData(squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate);
             break;
           } else if (count == limit) {
