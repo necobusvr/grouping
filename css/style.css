@@ -14,9 +14,18 @@ h6 {
   font-family: "Mochiy Pop P One", sans-serif;
 }
 
-h1 {
-  max-width: 1200px;
-  margin: 0 auto;
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+header h1 {
   font-family: "Anton", "Mochiy Pop P One", sans-serif;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -28,23 +37,51 @@ h1 {
           align-items: center;
 }
 
-h1 .pop1 {
+header h1 .pop1 {
   font-size: 40px;
   background: #a80000;
   color: #fff;
   padding: 0px 20px;
 }
 
-h1 .room {
+header h1 .room {
   font-size: 30px;
   margin-left: 20px;
 }
 
 @media screen and (max-width: 600px) {
-  h1 .room {
+  header h1 .room {
     margin: 10px 0 0 0;
     font-size: 24px;
   }
+}
+
+header .lucky-person {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: "Caveat", cursive;
+  font-size: 22px;
+}
+
+header .lucky-person #lucky-input {
+  border: 1px solid #555;
+  margin: 10px 0 0 15px;
+  padding: 10px;
+  width: 100px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+}
+
+header .lucky-person #lucky-input[type="number"]::-webkit-inner-spin-button,
+header .lucky-person #lucky-input [type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
 }
 
 #member {
@@ -544,6 +581,11 @@ h1 .room {
   border-bottom: 1px dashed #ccc;
 }
 
+#group > section > div .player .lucky-person {
+  padding-left: 5px;
+  color: #ffc400;
+}
+
 #group > section > div .player div:last-child {
   font-size: 16px;
   padding-left: 10px;
@@ -570,6 +612,35 @@ h1 .room {
 #group > section.weak-squad .kill-rate-average,
 #group > section.weak-squad .kill-rate-sum {
   background: #d2f1ff;
+}
+
+#group.lucky-remove .lucky-person {
+  display: none;
+}
+
+#lucky-switch {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#lucky-switch div {
+  margin: 20px 20px 0 0;
+  text-align: right;
+  position: relative;
+}
+
+#lucky-switch div:hover {
+  cursor: pointer;
+  color: #30be23;
+}
+
+#lucky-switch div::before {
+  content: "★";
+  color: #ffc400;
+  font-size: 20px;
+  position: relative;
+  left: -3px;
+  top: 1px;
 }
 
 footer {
