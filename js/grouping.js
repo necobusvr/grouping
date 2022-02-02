@@ -325,18 +325,19 @@ let grouping = {
             weakSquad[squadMinKillRatePosition].classList.add("weak-squad");
 
             // ラッキーパーソンの表示切り替え
-            grouping.groupDiv.classList.remove("lucky-remove");
-            grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
-            grouping.luckySwitch.onclick = function () {
-              grouping.groupDiv.classList.toggle("lucky-remove");
-              if (grouping.luckySwitch.innerText === "Lucky Person を非表示にする") {
-                grouping.luckySwitch.innerHTML = "<div>Lucky Person を表示する</div>";
-              } else {
-                grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
-              }
-            };
-            console.log(grouping.luckySwitch.innerText == "Lucky Person を非表示にする");
-
+            console.log(luckyInput.value);
+            if (luckyInput.value != 0) {
+              grouping.groupDiv.classList.remove("lucky-remove");
+              grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
+              grouping.luckySwitch.onclick = function () {
+                grouping.groupDiv.classList.toggle("lucky-remove");
+                if (grouping.luckySwitch.innerText === "Lucky Person を非表示にする") {
+                  grouping.luckySwitch.innerHTML = "<div>Lucky Person を表示する</div>";
+                } else {
+                  grouping.luckySwitch.innerHTML = "<div>Lucky Person を非表示にする</div>";
+                }
+              };
+            }
             copy.textData(squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate);
             break;
           } else if (count == limit) {
