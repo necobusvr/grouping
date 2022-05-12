@@ -1,5 +1,4 @@
-"use strict";
-let copy = {
+export let copy = {
   copyId: document.getElementById("copy"),
   textData: function (squadArray, squadNewKRSumAry, killRateAverage, squadMaxKillRate, squadMinKillRate) {
     // 分割されたスクワッドの配列をキルレート順にソート
