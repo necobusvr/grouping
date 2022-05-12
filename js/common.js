@@ -1,5 +1,4 @@
-"use strict";
-let common = {
+export let common = {
   entryInner: document.getElementById("entry-inner"),
   addButton: document.getElementById("add"),
   deleteButton: document.getElementById("delete"),
@@ -7,7 +6,7 @@ let common = {
   closeBtnClass: document.getElementsByClassName("close"),
 
   // 対応人数
-  maxPlayer: 50,
+  maxPlayer: 100,
 
   // input 入力欄のclass
   playerName: document.getElementsByClassName("player-name"),
