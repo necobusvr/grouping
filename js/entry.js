@@ -197,7 +197,6 @@ export let entry = {
         entry.createEntry();
         // for文を終わらせるために「任意の入力欄を削除する関数」に戻る
         entry.deletePlayer();
-        n = i;
       });
     }
   },
