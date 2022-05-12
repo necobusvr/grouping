@@ -1,6 +1,8 @@
 "use strict";
+
+import { entry } from './entry.js';
+
 const fileInput = document.getElementById("file-input");
-const formInputs = document.getElementsByClassName("file-input");
 const csvMessage = document.getElementById("csv-message");
 const utf8 = document.getElementById("utf-8");
 const shiftJis = document.getElementById("shift-jis");
@@ -63,7 +65,14 @@ fileReader.onload = () => {
     }
     return result;
   });
-  entry.deleteAllElements();
+
+  // 子要素を削除（エントリープレイヤー）
+  const entryInner = document.getElementById('entry-inner');
+  (function () {
+    while (entryInner.firstChild) {
+      entryInner.removeChild(entryInner.firstChild);
+    }
+  })();
   entry.createEntry();
   entry.deletePlayer();
 
