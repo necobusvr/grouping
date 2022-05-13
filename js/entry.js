@@ -171,7 +171,7 @@ export let entry = {
     for (let i = 0; i < common.playerName.length; i++) {
       entry.entryArray.push({
         player_name: common.playerName[i].value,
-        kill_rate: common.killRate[i].value,
+        kill_rate: Number(common.killRate[i].value),
         teamMate_check: common.teamMateCheck[i].checked,
       });
 
