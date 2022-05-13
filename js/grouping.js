@@ -122,7 +122,7 @@ let grouping = {
      * 組み合わせ抽選の処理
      */
     let count = 1;
-    let limit = 1000000;
+    let limit = 100;
     if (teamMateErrorCheck() !== false) {
       while (count <= limit) {
         //シャッフルした配列
